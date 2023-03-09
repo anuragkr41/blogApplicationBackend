@@ -1,6 +1,7 @@
 package com.pictu.blog.services.impl;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -20,11 +21,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	// @Qualifier("userRepository")
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public UserDTO createUser(UserDTO userDto) {
 
-		ModelMapper modelMapper = new ModelMapper();
+		//ModelMapper modelMapper = new ModelMapper();
 		User user = modelMapper.map(userDto, User.class);
 		User savedUser = userRepository.save(user);
 
@@ -33,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO updateUser(UserDTO userDto, Integer id) {
-		ModelMapper modelMapper = new ModelMapper();
+		//ModelMapper modelMapper = new ModelMapper();
 
 		User user = this.userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
@@ -49,18 +53,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUserById(Integer id) {
-		ModelMapper modelMapper = new ModelMapper();
+		//ModelMapper modelMapper = new ModelMapper();
 		User user = this.userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		return modelMapper.map(user, UserDTO.class);
 	}
 
 	@Override
 	public List<UserDTO> getAllUsers() {
-		ModelMapper modelMapper = new ModelMapper();
+		//ModelMapper modelMapper = new ModelMapper();
 
 		List<User> users = this.userRepository.findAll();
-
-		List<UserDTO> userDtoList = users.stream().map(user -> modelMapper.map(users, UserDTO.class))
+		List<UserDTO> userDtoList = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
 				.collect(Collectors.toList());
 
 		return userDtoList;
@@ -74,5 +77,4 @@ public class UserServiceImpl implements UserService {
 
 		this.userRepository.delete(user);
 	}
-
 }
