@@ -85,10 +85,18 @@ public class PostController {
 	// Update post
 	@PutMapping("/posts/{postId}")
 	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId) {
-
 		PostDto updatedPost = this.postService.updatePost(postDto, postId);
-
 		return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+	}
+
+	// Search post
+
+	@GetMapping("/posts/search/{keywords}")
+	public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable String keywords) {
+		List<PostDto> result = this.postService.searchPosts(keywords);
+
+		return new ResponseEntity<List<PostDto>>(result, HttpStatus.OK);
+
 	}
 
 }
