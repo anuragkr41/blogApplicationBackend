@@ -1,8 +1,11 @@
 package com.pictu.blog.payloads;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.pictu.blog.entities.Category;
+import com.pictu.blog.entities.Comment;
 import com.pictu.blog.entities.User;
 
 import lombok.AllArgsConstructor;
@@ -28,5 +31,7 @@ public class PostDto {
 	private CategoryDTO category;
 
 	private UserDTO user;
+
+	private Set<CommentDto> comments = new HashSet<>();
 
 }
