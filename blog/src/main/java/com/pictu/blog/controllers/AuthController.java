@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pictu.blog.config.security.JWTTokenHelper;
+import com.pictu.blog.exceptions.ApiException;
 import com.pictu.blog.payloads.JWTAuthRequest;
 import com.pictu.blog.payloads.JWTAuthresponse;
 
@@ -32,7 +33,7 @@ public class AuthController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<JWTAuthresponse> createToken(
-			@RequestBody JWTAuthRequest request ) {
+			@RequestBody JWTAuthRequest request ) throws Exception {
 		
 		this.authenticate(request.getUsername(), request.getPassword());
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
@@ -42,11 +43,18 @@ public class AuthController {
 		return new ResponseEntity<JWTAuthresponse>(response, HttpStatus.OK);
 	}
 
-	private void authenticate(String username, String password)  {
+	private void authenticate(String username, String password) throws Exception  {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 		
 		
-			this.authenticationManager.authenticate(authenticationToken);			
+		try {
+				this.authenticationManager.authenticate(authenticationToken);			
+		}catch(BadCredentialsException e) {
+			System.out.println("Invalid Details");
+			throw new ApiException("Invalid username or password");
+		}
+		
+		
 	
 			
 			
