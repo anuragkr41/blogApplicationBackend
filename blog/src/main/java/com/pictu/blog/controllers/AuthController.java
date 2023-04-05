@@ -17,6 +17,8 @@ import com.pictu.blog.config.security.JWTTokenHelper;
 import com.pictu.blog.exceptions.ApiException;
 import com.pictu.blog.payloads.JWTAuthRequest;
 import com.pictu.blog.payloads.JWTAuthresponse;
+import com.pictu.blog.payloads.UserDTO;
+import com.pictu.blog.services.UserService;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -30,6 +32,9 @@ public class AuthController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<JWTAuthresponse> createToken(
@@ -46,19 +51,19 @@ public class AuthController {
 	private void authenticate(String username, String password) throws Exception  {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 		
-		
 		try {
 				this.authenticationManager.authenticate(authenticationToken);			
 		}catch(BadCredentialsException e) {
 			System.out.println("Invalid Details");
 			throw new ApiException("Invalid username or password");
 		}
-		
-		
+			
+	}
 	
-			
-			
+	@PostMapping("/register")
+	private ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO){
+		UserDTO registeredUser = this.userService.registerNewUser(userDTO);
+		return new ResponseEntity<UserDTO>(registeredUser, HttpStatus.CREATED);
 		
-			
 	}
 }

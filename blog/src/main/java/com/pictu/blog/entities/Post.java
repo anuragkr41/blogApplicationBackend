@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.pictu.blog.payloads.AuditableEntity;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class Post extends AuditableEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
