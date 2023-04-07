@@ -40,11 +40,11 @@ public class BlogApplication implements CommandLineRunner {
 		try {
 			Role role = new Role();
 			role.setId(AppConstants.ADMIN_USER);
-			role.setName("ADMIN_USER");
+			role.setName("ROLE_ADMIN");
 			
 			Role role2 = new Role();
 			role2.setId(AppConstants.NORMAL_USER);
-			role2.setName("NORMAL_USER");
+			role2.setName("ROLE_NORMAL");
 			
 			
 			
