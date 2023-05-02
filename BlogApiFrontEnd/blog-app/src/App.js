@@ -1,16 +1,23 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Base from './components/Base';
+import { BrowserRouter, Routes, Route  } from 'react-router-dom';
+import Home from './components/Pages/Home';
+import Login from './components/Pages/Login';
+import SignUp from './components/Pages/SignUp';
+import About from './components/Pages/About';
 
 function App() {
   return (
+    <BrowserRouter>
+    <Routes>
 
-    <Base>
-    
-      <h1>This is app component</h1>
+      <Route path="/" element={<Home/>}></Route>
+      <Route path="/login" element={<Login/>}></Route>
+      <Route path="/signup" element={<SignUp/>}></Route>
+      <Route path="/about" element={<About/>}></Route>
 
-    </Base>
-    
+    </Routes>
+    </BrowserRouter>
 
   );
 }
