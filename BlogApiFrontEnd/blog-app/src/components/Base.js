@@ -1,11 +1,13 @@
-const Base = ({title = "Welcome to our website", children})=>{
-    return (
-        <div className="container-fluid">
-            <h1>This is a header</h1>
-            {children}
-            <h1>This is footer</h1>
-        </div>
+import CustomNavbar from "./Navbar";
 
-    )
-}
+const Base = ({ title = "Welcome to our website", children }) => {
+	return (
+		<div className="container-fluid p-0 m-0">
+			<CustomNavbar />
+
+			{children}
+			<h1>This is footer</h1>
+		</div>
+	);
+};
 export default Base;
